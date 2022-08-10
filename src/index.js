@@ -189,6 +189,7 @@ export default class RNPickerSelect extends PureComponent {
         this.setState((prevState) => {
             return {
                 selectedItem: prevState.items[index],
+                showPicker  : (Platform.OS == 'android' || Platform.OS == 'web') ? false : prevState.showPicker,
             };
         });
     }
