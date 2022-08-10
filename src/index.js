@@ -113,6 +113,8 @@ export default class RNPickerSelect extends PureComponent {
     constructor(props) {
         super(props);
 
+        this.pickerRef = React.createRef()
+
         const items = RNPickerSelect.handlePlaceholder({
             placeholder: props.placeholder,
         }).concat(props.items);
@@ -243,6 +245,14 @@ export default class RNPickerSelect extends PureComponent {
             modalProps && modalProps.animationType ? modalProps.animationType : 'slide';
 
         this.triggerOpenCloseCallbacks();
+
+        try {
+            if (!showPicker && this.pickerRef && (Platform.OS == 'android' || Platform.OS == 'web')) {
+                this.pickerRef.current?.focus();
+            }
+        } catch (err) {
+            console.warn(err.message)
+        }
 
         this.setState(
             (prevState) => {
@@ -489,6 +499,7 @@ export default class RNPickerSelect extends PureComponent {
                 <View style={style.headlessAndroidContainer}>
                     {this.renderTextInputOrChildren()}
                     <Picker
+                        ref={this.pickerRef}
                         style={[
                             Icon ? { backgroundColor: 'transparent' } : {}, // to hide native icon
                             defaultStyles.headlessAndroidPicker,
@@ -514,6 +525,7 @@ export default class RNPickerSelect extends PureComponent {
         return (
             <View style={[defaultStyles.viewContainer, style.viewContainer]}>
                 <Picker
+                    ref={this.pickerRef}
                     style={[
                         Icon ? { backgroundColor: 'transparent' } : {}, // to hide native icon
                         style.inputAndroid,
@@ -539,6 +551,7 @@ export default class RNPickerSelect extends PureComponent {
         return (
             <View style={[defaultStyles.viewContainer, style.viewContainer]}>
                 <Picker
+                    ref={this.pickerRef}
                     style={[style.inputWeb]}
                     testID="web_picker"
                     enabled={!disabled}
