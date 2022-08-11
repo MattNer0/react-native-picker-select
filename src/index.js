@@ -308,36 +308,40 @@ export default class RNPickerSelect extends PureComponent {
                 testID="input_accessory_view"
             >
                 <View style={[defaultStyles.chevronContainer, style.chevronContainer]}>
-                    <TouchableOpacity
-                        activeOpacity={onUpArrow ? 0.5 : 1}
-                        onPress={onUpArrow ? this.onUpArrow : null}
-                    >
-                        <View
-                            style={[
-                                defaultStyles.chevron,
-                                style.chevron,
-                                defaultStyles.chevronUp,
-                                style.chevronUp,
-                                onUpArrow ? [defaultStyles.chevronActive, style.chevronActive] : {},
-                            ]}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        activeOpacity={onDownArrow ? 0.5 : 1}
-                        onPress={onDownArrow ? this.onDownArrow : null}
-                    >
-                        <View
-                            style={[
-                                defaultStyles.chevron,
-                                style.chevron,
-                                defaultStyles.chevronDown,
-                                style.chevronDown,
-                                onDownArrow
-                                    ? [defaultStyles.chevronActive, style.chevronActive]
-                                    : {},
-                            ]}
-                        />
-                    </TouchableOpacity>
+                    { onUpArrow ? (
+                        <TouchableOpacity
+                            activeOpacity={0.5}
+                            onPress={this.onUpArrow}
+                        >
+                            <View
+                                style={[
+                                    defaultStyles.chevron,
+                                    style.chevron,
+                                    defaultStyles.chevronUp,
+                                    style.chevronUp,
+                                    onUpArrow ? [defaultStyles.chevronActive, style.chevronActive] : {},
+                                ]}
+                            />
+                        </TouchableOpacity>
+                    ) : null }
+                    { onDownArrow ? (
+                        <TouchableOpacity
+                            activeOpacity={0.5}
+                            onPress={this.onDownArrow}
+                        >
+                            <View
+                                style={[
+                                    defaultStyles.chevron,
+                                    style.chevron,
+                                    defaultStyles.chevronDown,
+                                    style.chevronDown,
+                                    onDownArrow
+                                        ? [defaultStyles.chevronActive, style.chevronActive]
+                                        : {},
+                                ]}
+                            />
+                        </TouchableOpacity>
+                    ) : null }
                 </View>
                 <TouchableOpacity
                     testID="done_button"
