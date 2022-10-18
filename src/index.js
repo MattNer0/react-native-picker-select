@@ -150,6 +150,10 @@ export default class RNPickerSelect extends PureComponent {
         }).concat(this.props.items);
         const itemsChanged = !isEqual(prevState.items, items);
 
+        if (!itemsChanged && this.props.value === prevProps.value) {
+            return
+        }
+
         // update selectedItem if value prop is defined and differs from currently selected item
         const { selectedItem, idx } = RNPickerSelect.getSelectedItem({
             items,
@@ -184,13 +188,13 @@ export default class RNPickerSelect extends PureComponent {
     onValueChange(value, index) {
         const { onValueChange } = this.props;
 
-        onValueChange(value, index);
-
         this.setState((prevState) => {
             return {
                 selectedItem: prevState.items[index],
                 showPicker  : (Platform.OS == 'android' || Platform.OS == 'web') ? false : prevState.showPicker,
             };
+        }, () => {
+            onValueChange(value, index);
         });
     }
 
